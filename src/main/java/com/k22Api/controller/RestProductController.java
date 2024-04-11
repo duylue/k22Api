@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/product")
 public class RestProductController {
     @Autowired
@@ -24,7 +25,13 @@ public class RestProductController {
     }
 
     @GetMapping("/findByName")
-    public ResponseEntity<?> del(@RequestParam String name){
+    public ResponseEntity<?> findByName(@RequestParam String name){
         return service.findByName(name);
     }
+    @GetMapping("/findById")
+    public ResponseEntity<?> findById(@RequestParam int pid){
+        return service.findById(pid);
+    }
+
+
 }
