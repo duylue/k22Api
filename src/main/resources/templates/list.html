@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+<body>
+<a href="/view/save/0">Tao moi</a>
+<table>
+    <tr>
+        <th>Id</th>
+        <th>product name</th>
+        <th>price</th>
+        <th>Company</th>
+        <th>status name</th>
+    </tr>
+    <tbody id="view">
+    </tbody>
+</table>
+<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+<script>
+    $(document).ready(function () {
+        getList()
+    })
+
+    function getList() {
+        $.ajax({
+            method: 'get',
+            url: 'http://localhost:8080/product/list',
+            contentType: "application/json",
+            success: function (json) {
+                console.log(json)
+                view(json.data)
+            }
+
+        })
+    }
+
+    function view(data) {
+        let body = $('#view');
+        body.empty();
+        let str = '';
+        for (let i = 0; i < data.length; i++) {
+            str += '<tr>'
+            str += '<td>' + data[i].pid + '</td>'
+            str += '<td>' + data[i].pname + '</td>'
+            str += '<td>' + data[i].price + '</td>'
+            str += '<td>' + data[i].cname + '</td>'
+            str += '<td>' + data[i].sname + '</td>'
+            str += '<td><a href="http://localhost:8080/view/save/'+data[i].pid+'">edit</a></td>'
+            str += '</tr>'
+            if (i==6){break}
+        }
+        body.append(str)
+    }
+</script>
+</body>
+</html>

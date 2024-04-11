@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div style="width: 300px;height: 300px">
+    <input name="pid" id="pid" hidden th:value="${pid}">
+    <label>pname : </label>
+    <input type="text" name="pname" id="pname"><br><br>
+    <label>price : </label>
+    <input type="text" name="price" id="price"><br><br>
+    <label>cid : </label>
+    <input type="text" name="cid" id="cid"><br><br>
+    <label>cid : </label>
+    <input type="text" name="sid" id="sid"><br><br>
+    <button type="button" onclick="save()">Dang Ky</button>
+</div>
+<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+<script>
+    $(document).ready(function () {
+       findById()
+    })
+
+    function findById() {
+        let pid = $('#pid').val();
+        if (pid >0){
+            $.ajax({
+                method: 'get',
+                url: "http://localhost:8080/product/findById?pid=" + pid,
+                contentType: "application/json",
+                success: function (json) {
+                    console.log(json)
+                    $('#pname').val(json.data.pname);
+                    $('#price').val(json.data.price);
+                    $('#cid').val(json.data.cid);
+                    $('#sid').val(json.data.sid);
+                }
+
+            })
+        }
+    }
+
+    function save() {
+        let pid = $('#pid').val();
+        let pname = $('#pname').val();
+        let price = $('#price').val();
+        let cid = $('#cid').val();
+        let sid = $('#sid').val();
+        let data = {
+            pid: pid,
+            pname: pname,
+            price: price,
+            cid: cid,
+            sid: sid
+        }
+        $.ajax({
+            method: 'post',
+            url: 'http://localhost:8080/product/save',
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (json) {
+                window.location.href = "http://localhost:8080/view/list"
+            }
+        })
+    }
+</script>
+</body>
+</html>
