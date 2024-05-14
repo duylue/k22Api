@@ -3,6 +3,8 @@ import com.k22Api.model.Product;
 import com.k22Api.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class RestProductController {
     @Autowired
     private ProductService service;
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/list")
     public ResponseEntity<?> getList(@RequestParam int page, @RequestParam int t){
         return service.getList(page,t);
