@@ -1,6 +1,8 @@
 package com.k22Api.repository;
 
 import com.k22Api.model.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,9 +15,12 @@ import java.util.Map;
 public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query(value = "select p.*, c.cname ,s.sname\n" +
             "from  product p, category c, status s\n" +
+            "where p.cid = c.cid and s.sid = p.sid order by p.pid", nativeQuery = true)
+    Page<Map<String, Object>> getlist(Pageable pageable);
+    @Query(value = "select p.*, c.cname ,s.sname\n" +
+            "from  product p, category c, status s\n" +
             "where p.cid = c.cid and s.sid = p.sid order by p.pid desc", nativeQuery = true)
     List<Map<String, Object>> getlist();
-
     @Query(value = "select p.*, c.cname ,s.sname\n" +
             "from  product p, category c, status s\n" +
             "where p.cid = c.cid and s.sid = p.sid and p.pid = ? ", nativeQuery = true)

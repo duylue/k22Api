@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 
 public interface ProductService {
     ResponseEntity<?> getList();
+    ResponseEntity<?> getList(int p, int t);
     ResponseEntity<?> save(Product product);
     ResponseEntity<?> delete( int pid);
     ResponseEntity<?> findById(int id);

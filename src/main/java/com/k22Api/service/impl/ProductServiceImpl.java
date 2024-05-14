@@ -5,8 +5,11 @@ import com.k22Api.model.Product;
 import com.k22Api.repository.ProductRepository;
 import com.k22Api.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class ProductServiceImpl extends BaseResponse implements ProductService {
@@ -14,7 +17,14 @@ public class ProductServiceImpl extends BaseResponse implements ProductService {
     private ProductRepository repository;
     @Override
     public ResponseEntity<?> getList() {
+
         return getResponseEntity(repository.getlist());
+    }
+
+    @Override
+    public ResponseEntity<?> getList(int p, int t) {
+        Pageable pageable = PageRequest.of(p,t);
+        return getResponseEntity(repository.getlist(pageable));
     }
 
     @Override

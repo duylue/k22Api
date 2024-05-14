@@ -12,8 +12,8 @@ public class RestProductController {
     @Autowired
     private ProductService service;
     @GetMapping("/list")
-    public ResponseEntity<?> getList(){
-        return service.getList();
+    public ResponseEntity<?> getList(@RequestParam int page, @RequestParam int t){
+        return service.getList(page,t);
     }
     @PostMapping("/save")
     public ResponseEntity<?> save(@RequestBody Product product){
