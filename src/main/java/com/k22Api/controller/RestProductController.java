@@ -7,6 +7,9 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Map;
+
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/product")
@@ -16,6 +19,7 @@ public class RestProductController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MANAGER','ROLE_USER')")
     @GetMapping("/list")
     public ResponseEntity<?> getList(){
+
         return service.getList();
     }
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -25,8 +29,8 @@ public class RestProductController {
     }
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/del")
-    public ResponseEntity<?> del(@RequestParam int id){
-        return service.delete(id);
+    public ResponseEntity<?> del(@RequestParam int pid){
+        return service.delete(pid);
     }
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/findByName")

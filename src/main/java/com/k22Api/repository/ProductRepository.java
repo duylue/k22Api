@@ -17,7 +17,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             "from  product p, category c, status s\n" +
             "where p.cid = c.cid and s.sid = p.sid order by p.pid", nativeQuery = true)
     Page<Map<String, Object>> getlist(Pageable pageable);
-    @Query(value = "select p.*, c.cname ,s.sname\n" +
+    @Query(value = "select p.*,p.pid as id, c.cname ,s.sname\n" +
             "from  product p, category c, status s\n" +
             "where p.cid = c.cid and s.sid = p.sid order by p.pid desc", nativeQuery = true)
     List<Map<String, Object>> getlist();
